@@ -1,6 +1,6 @@
 import React from 'react';
 import type { AnalysisResult } from '../types';
-import { BoltIcon, CpuChipIcon, HashtagIcon, ScaleIcon, TachometerIcon, ShieldCheckIcon } from './icons';
+import { BoltIcon, CpuChipIcon, HashtagIcon, ScaleIcon, TachometerIcon, ShieldCheckIcon, BuildingLibraryIcon } from './icons';
 
 interface AnalysisResultProps {
   data: AnalysisResult;
@@ -36,7 +36,8 @@ const AnalysisResultCard: React.FC<AnalysisResultProps> = ({ data }) => {
         
         <div className="divide-y divide-slate-200 px-2">
             <dl>
-                <ResultRow label="หมายเลข PEA" value={data.peaNumber} icon={<HashtagIcon className="w-5 h-5"/>} />
+                <ResultRow label="หน่วยงาน" value={data.authority} icon={<BuildingLibraryIcon className="w-5 h-5"/>} />
+                <ResultRow label="หมายเลขเครื่องวัด" value={data.meterNumber} icon={<HashtagIcon className="w-5 h-5"/>} />
                 <ResultRow label="ขนาดมิเตอร์" value={data.meterSize} icon={<ScaleIcon className="w-5 h-5"/>} />
                 <ResultRow label="ประเภทมิเตอร์" value={data.meterType} icon={<CpuChipIcon className="w-5 h-5"/>} />
                 <ResultRow label="สภาพภายนอก" value={data.meterCondition} icon={<ShieldCheckIcon className="w-5 h-5"/>} />
