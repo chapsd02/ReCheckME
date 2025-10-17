@@ -4,7 +4,7 @@ import AnalysisResultCard from './components/AnalysisResult';
 import Spinner from './components/Spinner';
 import { analyzeMeterImage } from './services/geminiService';
 import type { AnalysisResult } from './types';
-import { BoltIcon, SparklesIcon } from './components/icons';
+import { BoltIcon, SparklesIcon, ArrowPathIcon } from './components/icons';
 import SkeletonLoader from './components/SkeletonLoader';
 
 
@@ -45,6 +45,17 @@ const App: React.FC = () => {
       setIsLoading(false);
     }
   };
+  
+  const handleReset = useCallback(() => {
+    if (imageUrl) {
+        URL.revokeObjectURL(imageUrl);
+    }
+    setImageFile(null);
+    setImageUrl(null);
+    setAnalysisResult(null);
+    setError(null);
+    setIsLoading(false);
+  }, [imageUrl]);
 
   return (
     <div className="min-h-screen bg-slate-100 flex flex-col items-center p-4 sm:p-6 lg:p-8 font-sans">
@@ -65,14 +76,27 @@ const App: React.FC = () => {
           <div className="flex flex-col items-center space-y-6">
             <ImageUploader onFileSelect={handleFileSelect} imageUrl={imageUrl} />
             
-            <button
-              onClick={handleAnalyzeClick}
-              disabled={!imageFile || isLoading}
-              className="w-full flex justify-center items-center gap-x-3 px-6 py-4 border border-transparent text-lg font-bold rounded-xl text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-slate-400 disabled:cursor-not-allowed transition-colors duration-200"
-            >
-              {isLoading ? <Spinner /> : <SparklesIcon className="w-6 h-6" />}
-              {isLoading ? 'กำลังวิเคราะห์...' : 'เริ่มวิเคราะห์รูปภาพ'}
-            </button>
+            <div className="w-full flex flex-col sm:flex-row gap-4">
+                <button
+                  onClick={handleAnalyzeClick}
+                  disabled={!imageFile || isLoading}
+                  className="flex-grow flex justify-center items-center gap-x-3 px-6 py-4 border border-transparent text-lg font-bold rounded-xl text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-slate-400 disabled:cursor-not-allowed transition-colors duration-200"
+                >
+                  {isLoading ? <Spinner /> : <SparklesIcon className="w-6 h-6" />}
+                  {isLoading ? 'กำลังวิเคราะห์...' : 'เริ่มวิเคราะห์รูปภาพ'}
+                </button>
+                
+                {imageFile && (
+                    <button
+                      onClick={handleReset}
+                      disabled={isLoading}
+                      className="flex-shrink-0 flex justify-center items-center gap-x-2 px-6 py-4 border border-slate-300 text-lg font-bold rounded-xl text-slate-700 bg-slate-100 hover:bg-slate-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-400 disabled:bg-slate-200 disabled:text-slate-400 disabled:cursor-not-allowed transition-colors duration-200"
+                    >
+                      <ArrowPathIcon className="w-6 h-6" />
+                      <span>เริ่มต้นใหม่</span>
+                    </button>
+                )}
+            </div>
             
             {error && (
               <div className="w-full bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-md mt-6" role="alert">
