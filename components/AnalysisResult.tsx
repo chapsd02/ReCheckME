@@ -36,6 +36,7 @@ const AnalysisResultCard: React.FC<AnalysisResultProps> = ({ data }) => {
         
         <div className="divide-y divide-slate-200 px-2">
             <dl>
+                <ResultRow label="หมายเลข PEA" value={data.peaNumber} icon={<HashtagIcon className="w-5 h-5"/>} />
                 <ResultRow label="ขนาดมิเตอร์" value={data.meterSize} icon={<ScaleIcon className="w-5 h-5"/>} />
                 <ResultRow label="ประเภทมิเตอร์" value={data.meterType} icon={<CpuChipIcon className="w-5 h-5"/>} />
                 <ResultRow label="สภาพภายนอก" value={data.meterCondition} icon={<ShieldCheckIcon className="w-5 h-5"/>} />

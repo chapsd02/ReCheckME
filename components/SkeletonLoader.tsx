@@ -18,7 +18,7 @@ const SkeletonLoader: React.FC = () => {
         </div>
 
         <div className="divide-y divide-slate-200">
-            {[...Array(3)].map((_, i) => (
+            {[...Array(4)].map((_, i) => (
                 <div key={i} className="flex justify-between items-center py-4 px-5">
                     <div className="flex items-center space-x-4">
                         <ShimmeringDiv className="w-10 h-10 rounded-lg" />
