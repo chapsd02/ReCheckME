@@ -1,4 +1,3 @@
-
 import React, { useState, useCallback } from 'react';
 import { UploadIcon } from './icons';
 
@@ -52,18 +51,18 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onFileSelect, imageUrl })
           onDragLeave={handleDragLeave}
           onDragOver={handleDragOver}
           onDrop={handleDrop}
-          className={`relative flex flex-col items-center justify-center w-full h-64 border-2 border-dashed rounded-lg transition-colors duration-200 
-          ${isDragging ? 'border-sky-500 bg-sky-50' : 'border-slate-300 bg-white hover:bg-slate-50'}`}
+          className={`relative flex flex-col items-center justify-center w-full h-64 border-2 border-dashed rounded-xl bg-slate-50 transition-colors duration-300 
+          ${isDragging ? 'border-blue-500 bg-blue-50' : 'border-slate-300 hover:border-slate-400'}`}
         >
           {imageUrl ? (
-            <img src={imageUrl} alt="Preview" className="object-contain h-full w-full rounded-lg" />
+            <img src={imageUrl} alt="Preview" className="object-contain h-full w-full rounded-xl p-2" />
           ) : (
-            <div className="text-center">
+            <div className="text-center p-4">
               <UploadIcon className="mx-auto h-12 w-12 text-slate-400" />
-              <p className="mt-2 text-sm text-slate-600">
-                <span className="font-semibold text-sky-600">คลิกเพื่ออัปโหลด</span> หรือลากไฟล์มาวาง
+              <p className="mt-4 text-base text-slate-600">
+                <span className="font-semibold text-blue-700">คลิกเพื่ออัปโหลด</span> หรือลากไฟล์มาวาง
               </p>
-              <p className="text-xs text-slate-500">PNG, JPG, WEBP (สูงสุด 10MB)</p>
+              <p className="mt-1 text-xs text-slate-500">PNG, JPG, WEBP (สูงสุด 10MB)</p>
             </div>
           )}
         </div>

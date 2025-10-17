@@ -25,7 +25,9 @@ export const analyzeMeterImage = async (imageFile: File): Promise<AnalysisResult
 1. ขนาดของมิเตอร์ (meterSize) เช่น 5(15)A, 15(45)A, 30(100)A 
 2. ประเภทของมิเตอร์ (meterType) ว่าเป็น 'จานหมุน' หรือ 'ดิจิทัล' 
 3. หมายเลขเครื่องวัด (peaNumber) ซึ่งเป็นตัวเลขที่ระบุบนตัวมิเตอร์ 
-4. หน่วยการใช้ไฟฟ้า (reading) ที่แสดงบนหน้าปัดหรือหน้าจอ หากข้อมูลส่วนไหนไม่ชัดเจนหรือไม่สามารถอ่านได้ ให้ใส่ค่าเป็น 'ไม่สามารถระบุได้'`;
+4. หน่วยการใช้ไฟฟ้า (reading) ที่แสดงบนหน้าปัดหรือหน้าจอ
+5. สภาพภายนอกของมิเตอร์ (meterCondition) เช่น 'ปกติ', 'ชำรุด', 'มีรอยขีดข่วน', 'กระจกฝ้า/มัว'
+หากข้อมูลส่วนไหนไม่ชัดเจนหรือไม่สามารถอ่านได้ ให้ใส่ค่าเป็น 'ไม่สามารถระบุได้'`;
 
   const response = await ai.models.generateContent({
     model: model,
@@ -61,8 +63,12 @@ export const analyzeMeterImage = async (imageFile: File): Promise<AnalysisResult
             type: Type.STRING,
             description: "หน่วยการใช้ไฟฟ้าที่อ่านได้จากมิเตอร์",
           },
+          meterCondition: {
+            type: Type.STRING,
+            description: "สภาพภายนอกของมิเตอร์ (เช่น ปกติ, ชำรุด, กระจกฝ้า/มัว)",
+          },
         },
-        required: ["meterSize", "meterType", "peaNumber", "reading"],
+        required: ["meterSize", "meterType", "peaNumber", "reading", "meterCondition"],
       },
     },
   });

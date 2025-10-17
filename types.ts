@@ -4,4 +4,5 @@ export interface AnalysisResult {
   meterType: string;
   peaNumber: string;
   reading: string;
+  meterCondition: string;
 }

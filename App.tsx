@@ -1,10 +1,12 @@
-
 import React, { useState, useCallback } from 'react';
 import ImageUploader from './components/ImageUploader';
 import AnalysisResultCard from './components/AnalysisResult';
 import Spinner from './components/Spinner';
 import { analyzeMeterImage } from './services/geminiService';
 import type { AnalysisResult } from './types';
+import { BoltIcon, SparklesIcon } from './components/icons';
+import SkeletonLoader from './components/SkeletonLoader';
+
 
 const App: React.FC = () => {
   const [imageFile, setImageFile] = useState<File | null>(null);
@@ -18,7 +20,6 @@ const App: React.FC = () => {
     setAnalysisResult(null);
     setError(null);
     
-    // Create a URL for preview
     if (imageUrl) {
       URL.revokeObjectURL(imageUrl);
     }
@@ -46,38 +47,46 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col items-center p-4 sm:p-6 lg:p-8">
-      <div className="w-full max-w-2xl mx-auto">
-        <header className="text-center mb-8">
-          <h1 className="text-3xl sm:text-4xl font-bold text-slate-800">เครื่องมือช่วยอ่านมิเตอร์ไฟฟ้า</h1>
-          <p className="mt-2 text-md text-slate-600">อัปโหลดรูปถ่ายมิเตอร์ที่ไม่ชัด แล้วให้ AI ช่วยวิเคราะห์ข้อมูลให้คุณ</p>
+    <div className="min-h-screen bg-slate-100 flex flex-col items-center p-4 sm:p-6 lg:p-8 font-sans">
+      <div className="w-full max-w-3xl mx-auto">
+        <header className="mb-8">
+            <div className="flex items-center space-x-4">
+                <div className="flex-shrink-0 flex items-center justify-center h-16 w-16 bg-blue-600 text-white rounded-xl shadow-md">
+                    <BoltIcon className="w-8 h-8" />
+                </div>
+                <div>
+                    <h1 className="text-3xl font-bold text-slate-900 tracking-tight">เครื่องมือวิเคราะห์มิเตอร์ไฟฟ้า</h1>
+                    <p className="mt-1 text-lg text-slate-600">วิเคราะห์ข้อมูลจากภาพถ่ายมิเตอร์ด้วย AI</p>
+                </div>
+            </div>
         </header>
 
-        <main className="bg-white p-6 rounded-xl shadow-md">
+        <main className="bg-white p-6 sm:p-8 rounded-2xl shadow-lg border border-slate-200">
           <div className="flex flex-col items-center space-y-6">
             <ImageUploader onFileSelect={handleFileSelect} imageUrl={imageUrl} />
             
             <button
               onClick={handleAnalyzeClick}
               disabled={!imageFile || isLoading}
-              className="w-full flex justify-center items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-sky-600 hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 disabled:bg-slate-400 disabled:cursor-not-allowed transition-colors duration-200"
+              className="w-full flex justify-center items-center gap-x-3 px-6 py-4 border border-transparent text-lg font-bold rounded-xl text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-slate-400 disabled:cursor-not-allowed transition-colors duration-200"
             >
-              {isLoading ? <Spinner /> : null}
+              {isLoading ? <Spinner /> : <SparklesIcon className="w-6 h-6" />}
               {isLoading ? 'กำลังวิเคราะห์...' : 'เริ่มวิเคราะห์รูปภาพ'}
             </button>
             
             {error && (
-              <div className="w-full bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-md text-center" role="alert">
-                <strong className="font-bold">เกิดข้อผิดพลาด:</strong>
-                <span className="block sm:inline ml-2">{error}</span>
+              <div className="w-full bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-md mt-6" role="alert">
+                <p className="font-bold">เกิดข้อผิดพลาด</p>
+                <p>{error}</p>
               </div>
             )}
           </div>
         </main>
         
-        {analysisResult && (
-            <AnalysisResultCard data={analysisResult} />
-        )}
+        <div className="mt-8 w-full">
+            {isLoading && <SkeletonLoader />}
+            {analysisResult && <AnalysisResultCard data={analysisResult} />}
+        </div>
 
         <footer className="text-center mt-12 text-sm text-slate-500">
           <p>ขับเคลื่อนด้วยเทคโนโลยี Gemini AI</p>
