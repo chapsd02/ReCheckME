@@ -45,24 +45,29 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({ onFileSelect, imageUrl })
 
   return (
     <div className="w-full">
-      <label htmlFor="file-upload" className="cursor-pointer">
+      <label htmlFor="file-upload" className="cursor-pointer group">
         <div
           onDragEnter={handleDragEnter}
           onDragLeave={handleDragLeave}
           onDragOver={handleDragOver}
           onDrop={handleDrop}
-          className={`relative flex flex-col items-center justify-center w-full h-64 border-2 border-dashed rounded-xl bg-slate-50 transition-colors duration-300 
-          ${isDragging ? 'border-blue-500 bg-blue-50' : 'border-slate-300 hover:border-slate-400'}`}
+          className={`relative flex flex-col items-center justify-center w-full h-64 border-2 border-dashed rounded-xl bg-gray-50 transition-all duration-300 
+          ${isDragging ? 'border-indigo-500 bg-indigo-50 scale-[1.01]' : 'border-gray-300 group-hover:border-gray-400'}`}
         >
           {imageUrl ? (
-            <img src={imageUrl} alt="Preview" className="object-contain h-full w-full rounded-xl p-2" />
+            <>
+              <img src={imageUrl} alt="Preview" className="object-contain h-full w-full rounded-xl p-2" />
+              <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 flex items-center justify-center rounded-xl transition-all duration-300">
+                  <p className="text-white font-bold text-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300">เปลี่ยนรูปภาพ</p>
+              </div>
+            </>
           ) : (
             <div className="text-center p-4">
-              <UploadIcon className="mx-auto h-12 w-12 text-slate-400" />
-              <p className="mt-4 text-base text-slate-600">
-                <span className="font-semibold text-blue-700">คลิกเพื่ออัปโหลด</span> หรือลากไฟล์มาวาง
+              <UploadIcon className="mx-auto h-12 w-12 text-gray-400 group-hover:text-gray-500 transition-colors" />
+              <p className="mt-4 text-base text-gray-600">
+                <span className="font-semibold text-indigo-600">คลิกเพื่ออัปโหลด</span> หรือลากไฟล์มาวาง
               </p>
-              <p className="mt-1 text-xs text-slate-500">PNG, JPG, WEBP (สูงสุด 10MB)</p>
+              <p className="mt-1 text-xs text-gray-500">PNG, JPG, WEBP (สูงสุด 10MB)</p>
             </div>
           )}
         </div>

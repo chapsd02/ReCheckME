@@ -58,21 +58,19 @@ const App: React.FC = () => {
   }, [imageUrl]);
 
   return (
-    <div className="min-h-screen bg-slate-100 flex flex-col items-center p-4 sm:p-6 lg:p-8 font-sans">
+    <div className="min-h-screen bg-gray-50 flex flex-col items-center p-4 sm:p-6 lg:p-8 font-sans">
       <div className="w-full max-w-3xl mx-auto">
-        <header className="mb-8">
-            <div className="flex items-center space-x-4">
-                <div className="flex-shrink-0 flex items-center justify-center h-16 w-16 bg-blue-600 text-white rounded-xl shadow-md">
-                    <BoltIcon className="w-8 h-8" />
-                </div>
-                <div>
-                    <h1 className="text-3xl font-bold text-slate-900 tracking-tight">เครื่องมือวิเคราะห์มิเตอร์ไฟฟ้า</h1>
-                    <p className="mt-1 text-lg text-slate-600">วิเคราะห์ข้อมูลจากภาพถ่ายมิเตอร์ด้วย AI</p>
-                </div>
+        <header className="mb-8 text-center">
+            <div className="inline-flex items-center justify-center h-20 w-20 bg-gradient-to-br from-indigo-600 to-blue-500 text-white rounded-2xl shadow-lg mb-4">
+                <BoltIcon className="w-10 h-10" />
+            </div>
+            <div>
+                <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight">เครื่องมือวิเคราะห์มิเตอร์ไฟฟ้า</h1>
+                <p className="mt-2 text-xl text-gray-600">วิเคราะห์ข้อมูลจากภาพถ่ายมิเตอร์ด้วย AI อัจฉริยะ</p>
             </div>
         </header>
 
-        <main className="bg-white p-6 sm:p-8 rounded-2xl shadow-lg border border-slate-200">
+        <main className="bg-white p-6 sm:p-8 rounded-2xl shadow-xl border border-gray-200/80">
           <div className="flex flex-col items-center space-y-6">
             <ImageUploader onFileSelect={handleFileSelect} imageUrl={imageUrl} />
             
@@ -80,7 +78,7 @@ const App: React.FC = () => {
                 <button
                   onClick={handleAnalyzeClick}
                   disabled={!imageFile || isLoading}
-                  className="flex-grow flex justify-center items-center gap-x-3 px-6 py-4 border border-transparent text-lg font-bold rounded-xl text-white bg-blue-700 hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:bg-slate-400 disabled:cursor-not-allowed transition-colors duration-200"
+                  className="flex-grow flex justify-center items-center gap-x-3 px-6 py-4 border border-transparent text-lg font-bold rounded-xl text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-offset-2 focus:ring-indigo-500/50 disabled:bg-gray-400 disabled:cursor-not-allowed transform hover:scale-[1.02] transition-all duration-300 shadow-lg shadow-indigo-500/20"
                 >
                   {isLoading ? <Spinner /> : <SparklesIcon className="w-6 h-6" />}
                   {isLoading ? 'กำลังวิเคราะห์...' : 'เริ่มวิเคราะห์รูปภาพ'}
@@ -90,7 +88,7 @@ const App: React.FC = () => {
                     <button
                       onClick={handleReset}
                       disabled={isLoading}
-                      className="flex-shrink-0 flex justify-center items-center gap-x-2 px-6 py-4 border border-slate-300 text-lg font-bold rounded-xl text-slate-700 bg-slate-100 hover:bg-slate-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-400 disabled:bg-slate-200 disabled:text-slate-400 disabled:cursor-not-allowed transition-colors duration-200"
+                      className="flex-shrink-0 flex justify-center items-center gap-x-2 px-6 py-4 border border-gray-300 text-lg font-bold rounded-xl text-gray-700 bg-white hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-offset-2 focus:ring-gray-500/50 disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed transform hover:scale-[1.02] transition-all duration-300"
                     >
                       <ArrowPathIcon className="w-6 h-6" />
                       <span>เริ่มต้นใหม่</span>
@@ -99,7 +97,7 @@ const App: React.FC = () => {
             </div>
             
             {error && (
-              <div className="w-full bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-md mt-6" role="alert">
+              <div className="w-full bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-lg mt-6 animate-fade-in" role="alert">
                 <p className="font-bold">เกิดข้อผิดพลาด</p>
                 <p>{error}</p>
               </div>
@@ -112,7 +110,7 @@ const App: React.FC = () => {
             {analysisResult && <AnalysisResultCard data={analysisResult} />}
         </div>
 
-        <footer className="text-center mt-12 text-sm text-slate-500">
+        <footer className="text-center mt-12 text-sm text-gray-500">
           <p>ขับเคลื่อนด้วยเทคโนโลยี Gemini AI</p>
         </footer>
       </div>
